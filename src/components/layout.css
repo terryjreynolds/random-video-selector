@@ -7,6 +7,12 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(255, 212, 72);
+}
+
+#videoButton:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }
 article,
 aside,
@@ -236,6 +242,7 @@ h1 {
   text-rendering: optimizeLegibility;
   font-size: 2.25rem;
   line-height: 1.1;
+  text-align: center;
 }
 h2 {
   margin-left: 0;
@@ -287,6 +294,7 @@ h4 {
   text-rendering: optimizeLegibility;
   font-size: 1rem;
   line-height: 1.1;
+  text-align: center;
 }
 h5 {
   margin-left: 0;

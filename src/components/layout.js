@@ -34,7 +34,11 @@ const Layout = ({ children }) => {
       >
         <main>{children}</main>
 
-        <footer>
+        <footer
+          style={{
+            textAlign: `center`,
+          }}
+        >
           © {new Date().getFullYear()},{" "}
           <a href="https://terryjreynolds.dev">Terry J Reynolds</a> | Built with
           {` `}
