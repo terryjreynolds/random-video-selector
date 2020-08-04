@@ -15,7 +15,7 @@ const Video = () => {
     return window.gapi.client.youtube.search
       .list({
         part: ["snippet"],
-        maxResults: 10,
+        maxResults: 4,
         q: randomWords,
         safeSearch: "none",
         type: ["video"],
@@ -26,7 +26,7 @@ const Video = () => {
           console.log("Response", response.result.items[0].id.videoId)
           console.log("full Response", response)
           changeVideoId(
-            response.result.items[Math.floor(Math.random() * 9 + 0)].id.videoId
+            response.result.items[Math.floor(Math.random() * 3 + 0)].id.videoId
           )
           //videoId = response.result.items[0].id.videoId
         },
