@@ -16,20 +16,4 @@ export const onClientEntry = () => {
   addScript("https://apis.google.com/js/api.js")
 }
 
-function loadClient() {
-  console.log("found it")
-  window.gapi.client.setApiKey(process.env.YOUTUBE_API_KEY)
-  return window.gapi.client
-    .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-    .then(
-      function () {
-        console.log("GAPI client loaded for API")
-      },
-      function (err) {
-        console.error("Error loading GAPI client for API", err)
-      }
-    )
-}
-export const onInitialClientRender = () => {
-  window.gapi.load("client", loadClient)
-}
+
