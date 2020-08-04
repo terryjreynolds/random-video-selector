@@ -12,8 +12,6 @@ const addScript = url => {
   script.src = url
   document.body.appendChild(script)
 }
-export const onClientEntry = () => {
+export const onInitialClientRender = () => {
   addScript("https://apis.google.com/js/api.js")
 }
-
-
