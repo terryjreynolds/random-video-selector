@@ -7,8 +7,8 @@ const Video = () => {
   //on component render, load the API via script and then connect.
   //establish local state of the API connection using a variable. Can't use useState hook because
   //state can't be updated from within the callback function inside loadClient
-  let API_CONNECTION = false
-
+  //let API_CONNECTION = false
+  let [apiConnection, setApiConnection] = useState(false)
   let [loadStatus, setLoadStatus] = useState("noFlash")
   let x = 0
   if (videoId === "rrwd2_UkmNw") {
@@ -44,7 +44,7 @@ const Video = () => {
   }
 
   function connectAPI() {
-    if (API_CONNECTION === false) {
+    if (apiConnection === false) {
       window.gapi.load("client", loadClient)
     }
     function loadClient() {
@@ -55,7 +55,8 @@ const Video = () => {
         .then(
           function () {
             console.log("GAPI client loaded for API")
-            API_CONNECTION = true
+            //API_CONNECTION = true
+            setApiConnection(true)
           },
           function (err) {
             console.error("Error loading GAPI client for API", err)
@@ -73,7 +74,7 @@ const Video = () => {
   }
   function execute() {
     //this will only fire if there is a confirmed API connection
-    if (API_CONNECTION) {
+    if (apiConnection) {
       let randomWords = RandomWords({
         exactly: 2,
         join: " ",
@@ -130,7 +131,7 @@ const Video = () => {
         }}
       >
         <button
-          disabled={API_CONNECTION}
+          disabled={apiConnection}
           id="videoButton"
           style={{
             backgroundColor: `black`,
