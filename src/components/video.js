@@ -11,7 +11,7 @@ const Video = () => {
 
   let [loadStatus, setLoadStatus] = useState("noFlash")
   let x = 0
-  if (loadStatus === "noFlash") {
+  if (window.gapi !== "object") {
     checkGapiStatus()
   }
 
