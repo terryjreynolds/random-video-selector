@@ -48,7 +48,7 @@ const Video = () => {
     }
     function loadClient() {
       console.log("found it")
-      window.gapi.client.setApiKey(process.env.GATSBY_YOUTUBE_API_KEY)
+      window.gapi.client.setApiKey(process.env.GATSBY_API_KEY)
       return window.gapi.client
         .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(
