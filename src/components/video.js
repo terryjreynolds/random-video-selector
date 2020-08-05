@@ -29,7 +29,7 @@ const Video = () => {
       console.log("typeof gapiLoad", typeof gapiLoad)
       connectAPI()
     } else {
-      if (x <= 1 && typeof gapiLoad !== "object") {
+      if (x <= 10 && typeof gapiLoad !== "object") {
         console.log("recursive call")
         setTimeout(function () {
           checkGapiStatus()
