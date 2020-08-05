@@ -5,17 +5,20 @@ import "./video.css"
 
 const Video = () => {
   //on component render, load the API via script and then connect.
-  //establish local state of the API connection using a variable. Can't use useState hook because
-  //state can't be updated from within the callback function inside loadClient
-  //let API_CONNECTION = false
+  //establish local state of the API connection
   let [apiConnection, setApiConnection] = useState(false)
+  //state to help determine if error flash msg should be displayed
   let [loadStatus, setLoadStatus] = useState("noFlash")
+  //establish local state for the video id
+  const [videoId, setVideoId] = useState("rrwd2_UkmNw")
   let x = 0
-  if (videoId === "rrwd2_UkmNw") {
+  console.log("connectionstate", apiConnection)
+  console.log("loadstatusstate", loadStatus)
+  if (apiConnection !== true) {
     console.log("initializing")
     checkGapiStatus()
   }
-
+  //detect if the gapi script is loaded in the DOM
   function detectGapi() {
     x = x + 1
     console.log("connection attempt = ", x)
@@ -42,7 +45,7 @@ const Video = () => {
       }
     }
   }
-
+  //called on button click
   function connectAPI() {
     if (apiConnection === false) {
       window.gapi.load("client", loadClient)
@@ -54,21 +57,20 @@ const Video = () => {
         .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(
           function () {
+            //successful connection
             console.log("GAPI client loaded for API")
-            //API_CONNECTION = true
             setApiConnection(true)
           },
           function (err) {
+            //unsuccessful connection
             console.error("Error loading GAPI client for API", err)
-            API_CONNECTION = false
+            setApiConnection(false)
           }
         )
     }
   }
 
-  //establish local state for the video id
-  const [videoId, setVideoId] = useState("rrwd2_UkmNw")
-  //create a function to update state
+  // function to update state of videoId
   function changeVideoId(newUrl) {
     setVideoId(newUrl)
   }
@@ -90,14 +92,13 @@ const Video = () => {
         })
         .then(
           function (response) {
-            // Handle the results here (response.result has the parsed body).
+            // Handle the results here. Choose a random vid from the 4 selections
             console.log("Response", response.result.items[0].id.videoId)
             console.log("full Response", response)
             changeVideoId(
               response.result.items[Math.floor(Math.random() * 3 + 0)].id
                 .videoId
             )
-            //videoId = response.result.items[0].id.videoId
           },
           function (err) {
             console.error("Execute error", err)
@@ -131,7 +132,7 @@ const Video = () => {
         }}
       >
         <button
-          disabled={apiConnection}
+          disabled={!apiConnection}
           id="videoButton"
           style={{
             backgroundColor: `black`,
