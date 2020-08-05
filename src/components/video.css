@@ -1,0 +1,13 @@
+.showFlash {
+  display: block;
+  position: absolute;
+  top: 50vh;
+  left: 20vw;
+  border: solid black;
+  background-color: red;
+  color: black;
+  text-align: center;
+}
+.noFlash {
+  display: none;
+}

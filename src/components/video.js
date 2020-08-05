@@ -1,13 +1,49 @@
 import React, { useState } from "react"
 import YoutubeEmbedVideo from "youtube-embed-video"
 import RandomWords from "random-words"
+import "./video.css"
 
 const Video = () => {
   //on component render, load the API via script and then connect.
   //establish local state of the API connection using a variable. Can't use useState hook because
   //state can't be updated from within the callback function inside loadClient
   let API_CONNECTION = false
-  connectAPI()
+
+  let [loadStatus, setLoadStatus] = useState("noFlash")
+  let x = 0
+  if (loadStatus === "noFlash") {
+    checkGapiStatus()
+  }
+
+  //run async function that checks repeatedly for the existence of gapi before calling connectAPI
+
+  function detectGapi() {
+    x = x + 1
+    console.log("connection attempt = ", x)
+    const gapiLoad = window.gapi
+    console.log("initial detection of gapiLoad = ", gapiLoad)
+    return gapiLoad
+  }
+
+  async function checkGapiStatus() {
+    let gapiLoad = await detectGapi()
+    if (typeof gapiLoad === "object") {
+      console.log("typeof gapiLoad", typeof gapiLoad)
+      connectAPI()
+    } else {
+      if (x <= 1 && typeof gapiLoad !== "object") {
+        console.log("recursive call")
+        setTimeout(function () {
+          checkGapiStatus()
+        }, 2500)
+      } else {
+        console.log("im in x condition")
+        setLoadStatus("showFlash")
+        console.log("supreme error")
+      }
+    }
+  }
+
   function connectAPI() {
     if (API_CONNECTION === false) {
       window.gapi.load("client", loadClient)
@@ -29,6 +65,7 @@ const Video = () => {
         )
     }
   }
+
   //establish local state for the video id
   const [videoId, setVideoId] = useState("rrwd2_UkmNw")
   //create a function to update state
@@ -80,6 +117,11 @@ const Video = () => {
           suggestions={false}
         />
       </div>
+
+      <p className={loadStatus}>
+        Connection Error. Refresh your browser to try again.
+      </p>
+
       <div
         style={{
           textAlign: `center`,
