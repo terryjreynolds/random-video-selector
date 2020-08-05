@@ -15,8 +15,6 @@ const Video = () => {
     checkGapiStatus()
   }
 
-  //run async function that checks repeatedly for the existence of gapi before calling connectAPI
-
   function detectGapi() {
     x = x + 1
     console.log("connection attempt = ", x)
@@ -24,7 +22,7 @@ const Video = () => {
     console.log("initial detection of gapiLoad = ", gapiLoad)
     return gapiLoad
   }
-
+  //run async function that checks repeatedly for the existence of gapi before calling connectAPI
   async function checkGapiStatus() {
     let gapiLoad = await detectGapi()
     if (typeof gapiLoad === "object") {
@@ -50,7 +48,7 @@ const Video = () => {
     }
     function loadClient() {
       console.log("found it")
-      window.gapi.client.setApiKey(process.env.YOUTUBE_API_KEY)
+      window.gapi.client.setApiKey(process.env.GATSBY_YOUTUBE_API_KEY)
       return window.gapi.client
         .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(
@@ -75,7 +73,10 @@ const Video = () => {
   function execute() {
     //this will only fire if there is a confirmed API connection
     if (API_CONNECTION) {
-      let randomWords = RandomWords({ exactly: 2, join: " " })
+      let randomWords = RandomWords({
+        exactly: 2,
+        join: " ",
+      })
       console.log("randomWords", randomWords)
       return window.gapi.client.youtube.search
         .list({
